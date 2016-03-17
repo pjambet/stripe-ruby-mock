@@ -31,7 +31,14 @@ module StripeMock
         invalid_cvc: ["The card's security code is invalid", 'cvc', 'invalid_cvc', 402],
         expired_card: ["The card has expired", 'exp_month', 'expired_card', 402],
         incorrect_cvc: ["The card's security code is incorrect", 'cvc', 'incorrect_cvc', 402],
-        card_declined: ["The card was declined", nil, 'card_declined', 402],
+        card_declined: [
+          "The card was declined",
+          nil,
+          'card_declined',
+          402,
+          { error: { message: "Your card was declined.", type: "card_error", code: "card_declined", decline_code: "generic_decline", charge: "ch_test" } }.to_json,
+          { error: { message: "Your card was declined.", type: "card_error", code: "card_declined", decline_code: "generic_decline", charge: "ch_test" } }
+        ],
         missing: ["There is no card on a customer that is being charged.", nil, 'missing', 402],
         processing_error: ["An error occurred while processing the card", nil, 'processing_error', 402],
       }
