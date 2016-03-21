@@ -23,6 +23,16 @@ module StripeMock
   module CardErrors
 
     def self.argument_map
+      card_declined_body = {
+        error: {
+          message: "Your card was declined.",
+          type: "card_error",
+          code: "card_declined",
+          decline_code: "generic_decline",
+          charge: "ch_test"
+        }
+      }
+
       @__map ||= {
         incorrect_number: ["The card number is incorrect", 'number', 'incorrect_number', 402],
         invalid_number: ["The card number is not a valid credit card number", 'number', 'invalid_number', 402],
@@ -36,8 +46,8 @@ module StripeMock
           nil,
           'card_declined',
           402,
-          { error: { message: "Your card was declined.", type: "card_error", code: "card_declined", decline_code: "generic_decline", charge: "ch_test" } }.to_json,
-          { error: { message: "Your card was declined.", type: "card_error", code: "card_declined", decline_code: "generic_decline", charge: "ch_test" } }
+          card_declined_body.to_json,
+          card_declined_body
         ],
         missing: ["There is no card on a customer that is being charged.", nil, 'missing', 402],
         processing_error: ["An error occurred while processing the card", nil, 'processing_error', 402],
